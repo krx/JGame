@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import jgame.math.Vector2;
 
-public class Mouse{
+public class Mouse {
 	protected Vector2 position;
 	protected static boolean left, middle, right;
 	
-	//Action Lists
+	// Action Lists
 	protected static ArrayList<MouseAction> mClick = new ArrayList<MouseAction>();
 	protected static ArrayList<MouseAction> mPress = new ArrayList<MouseAction>();
 	protected static ArrayList<MouseAction> mRelease = new ArrayList<MouseAction>();
 	protected static ArrayList<MouseAction> mMove = new ArrayList<MouseAction>();
 	protected static ArrayList<MouseAction> mDrag = new ArrayList<MouseAction>();
 	
-	public Mouse(){
+	public Mouse() {
 		position = new Vector2();
 		left = false;
 		middle = false;
@@ -34,8 +34,8 @@ public class Mouse{
 		return right;
 	}
 	
-	public static void addMouseAction(MouseEventType type, MouseAction action){
-		switch(type){
+	public static void addMouseAction(MouseEventType type, MouseAction action) {
+		switch(type) {
 			case MOUSE_CLICKED:
 				mClick.add(action);
 				break;

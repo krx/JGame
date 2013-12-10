@@ -13,8 +13,8 @@ public class Vector2 {
 	/**
 	 * Initializes this vector to 0
 	 */
-	public Vector2(){
-		set(0,0);
+	public Vector2() {
+		set(0, 0);
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class Vector2 {
 	public Vector2(double x, double y) {
 		set(x, y);
 	}
-
+	
 	/**
 	 * Initializes this vector as a copy of another
 	 * @param v Vector to copy
@@ -39,7 +39,7 @@ public class Vector2 {
 	 * @param theta Angle in degrees to start in
 	 */
 	public Vector2(double theta) {
-		set(1,0);
+		set(1, 0);
 		rotate(theta);
 	}
 	
@@ -48,7 +48,7 @@ public class Vector2 {
 	 * @param v Vector to copy coordinates from
 	 * @return Vector with new coordinates
 	 */
-	public Vector2 set(Vector2 v){
+	public Vector2 set(Vector2 v) {
 		x = v.x;
 		y = v.y;
 		return this;
@@ -60,9 +60,9 @@ public class Vector2 {
 	 * @param vy y-coordinate
 	 * @return Vector with new coordinates
 	 */
-	public Vector2 set(double vx, double vy){
-		x=vx;
-		y=vy;
+	public Vector2 set(double vx, double vy) {
+		x = vx;
+		y = vy;
 		return this;
 	}
 	
@@ -70,24 +70,25 @@ public class Vector2 {
 	 * Returns the angle of this vector in degrees in the range [0,360), measured relative to the x-axis, going counter-clockwise (Standard position)
 	 * @return The angle of this vector in degrees
 	 */
-	public double angle(){
+	public double angle() {
 		double angle = Math.toDegrees(Math.atan2(y, x));
-		if(angle < 0) angle += 360;
+		if(angle < 0)
+			angle += 360;
 		return angle;
 	}
 	
 	/**
 	 * @return The magnitude of this vector
 	 */
-	public double mag(){
-		return Math.sqrt(x*x + y*y);
+	public double mag() {
+		return Math.sqrt(x * x + y * y);
 	}
 	
 	/**
 	 * @return The squared magnitude of this vector
 	 */
-	public double mag2(){
-		return x*x + y*y;
+	public double mag2() {
+		return x * x + y * y;
 	}
 	
 	/**
@@ -95,8 +96,8 @@ public class Vector2 {
 	 * @param v Vector to dot
 	 * @return The dot product of two vectors
 	 */
-	public double dot(Vector2 v){
-		return x*v.x + y*v.y;
+	public double dot(Vector2 v) {
+		return x * v.x + y * v.y;
 	}
 	
 	/**
@@ -105,8 +106,8 @@ public class Vector2 {
 	 * @param vy y-coordinate of second vector
 	 * @return The dot product of two vectors
 	 */
-	public double dot(double vx, double vy){
-		return x*vx + y*vy;
+	public double dot(double vx, double vy) {
+		return x * vx + y * vy;
 	}
 	
 	/**
@@ -114,10 +115,10 @@ public class Vector2 {
 	 * @param v Vector to find the distance to
 	 * @return The Euclidean distance between two vectors
 	 */
-	public double dist(Vector2 v){
-		double dx = v.x-x;
-		double dy = v.y-y;
-		return Math.sqrt(dx*dx + dy*dy);
+	public double dist(Vector2 v) {
+		double dx = v.x - x;
+		double dy = v.y - y;
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 	
 	/**
@@ -126,10 +127,10 @@ public class Vector2 {
 	 * @param vy y-coordinate of the second vector
 	 * @return The Euclidean distance between two vectors
 	 */
-	public double dist(double vx, double vy){
-		double dx = vx-x;
-		double dy = vy-y;
-		return Math.sqrt(dx*dx + dy*dy);
+	public double dist(double vx, double vy) {
+		double dx = vx - x;
+		double dy = vy - y;
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 	
 	/**
@@ -137,10 +138,10 @@ public class Vector2 {
 	 * @param v Vector to find the distance to
 	 * @return The squared Euclidean distance between two vectors
 	 */
-	public double dist2(Vector2 v){
-		double dx = v.x-x;
-		double dy = v.y-y;
-		return dx*dx + dy*dy;
+	public double dist2(Vector2 v) {
+		double dx = v.x - x;
+		double dy = v.y - y;
+		return dx * dx + dy * dy;
 	}
 	
 	/**
@@ -149,17 +150,17 @@ public class Vector2 {
 	 * @param vy y-coordinate of the second vector
 	 * @return The squared Euclidean distance between two vectors
 	 */
-	public double dist2(double vx, double vy){
-		double dx = vx-x;
-		double dy = vy-y;
-		return dx*dx + dy*dy;
+	public double dist2(double vx, double vy) {
+		double dx = vx - x;
+		double dy = vy - y;
+		return dx * dx + dy * dy;
 	}
 	
 	/**
 	 * Normalizes this vector, setting its magnitude to 1
 	 * @return Normalized vector
 	 */
-	public Vector2 normalize(){
+	public Vector2 normalize() {
 		double mag = mag();
 		if(mag != 0) {
 			x /= mag;
@@ -172,12 +173,12 @@ public class Vector2 {
 	 * Reverses the direction of this vector
 	 * @return A vector with reversed direction
 	 */
-	public Vector2 negate(){
+	public Vector2 negate() {
 		x = -x;
 		y = -y;
 		return this;
 	}
-
+	
 	/**
 	 * Adds another vector to this one
 	 * @param v Vector to add
@@ -195,7 +196,7 @@ public class Vector2 {
 	 * @param vy y-coordinate of the second vector
 	 * @return Sum of the two vectors
 	 */
-	public Vector2 add(double vx, double vy){
+	public Vector2 add(double vx, double vy) {
 		x += vx;
 		y += vy;
 		return this;
@@ -218,7 +219,7 @@ public class Vector2 {
 	 * @param vy y-coordinate of the second vector
 	 * @return Resulting vector of subtraction
 	 */
-	public Vector2 subtract(double vx, double vy){
+	public Vector2 subtract(double vx, double vy) {
 		x -= vx;
 		y -= vy;
 		return this;
@@ -229,7 +230,7 @@ public class Vector2 {
 	 * @param scalar Scalar value to multiply by
 	 * @return Scaled vector
 	 */
-	public Vector2 scale(double scalar){
+	public Vector2 scale(double scalar) {
 		x *= scalar;
 		y *= scalar;
 		return this;
@@ -240,7 +241,7 @@ public class Vector2 {
 	 * @param v Vector to multiply by
 	 * @return Product of the two vectors
 	 */
-	public Vector2 scale(Vector2 v){
+	public Vector2 scale(Vector2 v) {
 		x *= v.x;
 		y *= v.y;
 		return this;
@@ -252,7 +253,7 @@ public class Vector2 {
 	 * @param vy y-coordinate of the second vector
 	 * @return Product of the two vectors
 	 */
-	public Vector2 scale(double vx, double vy){
+	public Vector2 scale(double vx, double vy) {
 		x *= vx;
 		y *= vy;
 		return this;
@@ -263,8 +264,8 @@ public class Vector2 {
 	 * @param scalar Scalar to divide by
 	 * @return Quotient vector
 	 */
-	public Vector2 divide(double scalar){
-		return scale(1/scalar);
+	public Vector2 divide(double scalar) {
+		return scale(1 / scalar);
 	}
 	
 	/**
@@ -272,8 +273,8 @@ public class Vector2 {
 	 * @param v Vector to divide by
 	 * @return Quotient of the two vectors
 	 */
-	public Vector2 divide(Vector2 v){
-		return scale(1/v.x, 1/v.y);
+	public Vector2 divide(Vector2 v) {
+		return scale(1 / v.x, 1 / v.y);
 	}
 	
 	/**
@@ -282,8 +283,8 @@ public class Vector2 {
 	 * @param vy y-coordinate of the second vector
 	 * @return Quotient of the two vectors
 	 */
-	public Vector2 divide(double vx, double vy){
-		return scale(1/vx, 1/vy);
+	public Vector2 divide(double vx, double vy) {
+		return scale(1 / vx, 1 / vy);
 	}
 	
 	/**
@@ -291,8 +292,8 @@ public class Vector2 {
 	 * @param v Vector to cross
 	 * @return Cross product of two vectors
 	 */
-	public double cross(Vector2 v){
-		return x*v.y - y*v.x;
+	public double cross(Vector2 v) {
+		return x * v.y - y * v.x;
 	}
 	
 	/**
@@ -301,8 +302,8 @@ public class Vector2 {
 	 * @param vy y-coordinate of the second vector
 	 * @return Cross product of two vectors
 	 */
-	public double cross(double vx, double vy){
-		return x*vy - y*vx;
+	public double cross(double vx, double vy) {
+		return x * vy - y * vx;
 	}
 	
 	/**
@@ -310,7 +311,7 @@ public class Vector2 {
 	 * @param limit Maximum length
 	 * @return Vector with limited magnitude
 	 */
-	public Vector2 limit(double limit){
+	public Vector2 limit(double limit) {
 		if(mag() > limit)
 			normalize().scale(limit);
 		return this;
@@ -322,7 +323,7 @@ public class Vector2 {
 	 * @param max Maximum magnitude
 	 * @return Clamped vector
 	 */
-	public Vector2 clamp(double min, double max){
+	public Vector2 clamp(double min, double max) {
 		double mag = mag();
 		if(mag > max)
 			return normalize().scale(max);
@@ -336,7 +337,7 @@ public class Vector2 {
 	 * @param theta Angle in degrees
 	 * @return Vector with the new angle
 	 */
-	public Vector2 setAngle(double theta){
+	public Vector2 setAngle(double theta) {
 		set(mag(), 0);
 		rotate(theta);
 		return this;
@@ -347,13 +348,13 @@ public class Vector2 {
 	 * @param theta Angle in degrees to rotate by
 	 * @return Rotated vector
 	 */
-	public Vector2 rotate(double theta){
+	public Vector2 rotate(double theta) {
 		double rad = Math.toRadians(theta);
 		double cos = Math.cos(rad);
 		double sin = Math.sin(rad);
 		
-		double rx = x*cos - y*sin;
-		double ry = y*cos + x*sin;
+		double rx = x * cos - y * sin;
+		double ry = y * cos + x * sin;
 		
 		x = rx;
 		y = ry;

@@ -10,6 +10,6 @@ public class MathUtils {
 	}
 	
 	public static double lerp(double val1, double val2, double percent) {
-		return val1 + (val2-val1)*percent;
+		return val1 + (val2 - val1) * percent;
 	}
 }

@@ -13,8 +13,8 @@ public class Complex {
 	/**
 	 * Initializes this complex number to 0
 	 */
-	public Complex(){
-		this(0,0);
+	public Complex() {
+		this(0, 0);
 	}
 	
 	/**
@@ -22,7 +22,7 @@ public class Complex {
 	 * @param real The real part
 	 * @param imaginary The imaginary part
 	 */
-	public Complex(double real, double imaginary){
+	public Complex(double real, double imaginary) {
 		set(real, imaginary);
 	}
 	
@@ -30,7 +30,7 @@ public class Complex {
 	 * Initializes this complex number as a copy of the given number
 	 * @param c Complex number to copy
 	 */
-	public Complex(Complex c){
+	public Complex(Complex c) {
 		set(c);
 	}
 	
@@ -56,7 +56,7 @@ public class Complex {
 		i += ci;
 		return this;
 	}
-
+	
 	/**
 	 * (a+bi)-(c+di) = (a-c)+(b-d)i
 	 * @param c Complex number to subtract
@@ -79,7 +79,7 @@ public class Complex {
 		i -= ci;
 		return this;
 	}
-
+	
 	/**
 	 * (a+bi)(c+di) = (ac-bd)+(ad+bc)i
 	 * @param c Complex number to multiply by
@@ -87,8 +87,8 @@ public class Complex {
 	 */
 	public Complex multiply(Complex c) {
 		Complex a = copy();
-		r = a.r*c.r - a.i*c.i;
-		i = a.r*c.i + a.i*c.r;
+		r = a.r * c.r - a.i * c.i;
+		i = a.r * c.i + a.i * c.r;
 		return this;
 	}
 	
@@ -100,8 +100,8 @@ public class Complex {
 	 */
 	public Complex multiply(double cr, double ci) {
 		Complex a = copy();
-		r = a.r*cr - a.i*ci;
-		i = a.r*ci + a.i*cr;
+		r = a.r * cr - a.i * ci;
+		i = a.r * ci + a.i * cr;
 		return this;
 	}
 	
@@ -112,10 +112,10 @@ public class Complex {
 	 */
 	public Complex multiply(double scalar) {
 		r *= scalar;
-		i *= scalar ;
+		i *= scalar;
 		return this;
 	}
-
+	
 	/**
 	 * (a+bi)/(c+di) = ((ac+bd)+(bc-ad))/(c*c + d*d)
 	 * @param c Complex number to divide by
@@ -138,7 +138,7 @@ public class Complex {
 	/**
 	 * @return The reciprocal of this complex number
 	 */
-	public Complex reciprocal(){
+	public Complex reciprocal() {
 		double den = absSquared();
 		r /= den;
 		i /= -den;
@@ -149,16 +149,16 @@ public class Complex {
 	 * |a+bi| = sqrt(a*a + b*b)
 	 * @return The absolute value of this complex number
 	 */
-	public double abs(){
-		return Math.sqrt(r*r + i*i);
+	public double abs() {
+		return Math.sqrt(r * r + i * i);
 	}
 	
 	/**
 	 * a*a + b*b
 	 * @return The squared absolute value of this complex number
 	 */
-	public double absSquared(){
-		return r*r + i*i;
+	public double absSquared() {
+		return r * r + i * i;
 	}
 	
 	/**
@@ -166,18 +166,18 @@ public class Complex {
 	 * @param exponent Power to raise tis complex number to
 	 * @return Complex number raised to the given power
 	 */
-	public Complex pow(int exponent){
-		if (exponent == 0) {
-			return set(1,0);
+	public Complex pow(int exponent) {
+		if(exponent == 0) {
+			return set(1, 0);
 		} else if(exponent < 0) {
 			Complex c = copy().reciprocal();
 			reciprocal();
-			for(int i=-1; i>exponent; i--)
+			for(int i = -1; i > exponent; i--)
 				multiply(c);
 			return this;
 		} else {
 			Complex c = copy();
-			for(int i=1; i<exponent; i++)
+			for(int i = 1; i < exponent; i++)
 				multiply(c);
 			return this;
 		}
@@ -187,60 +187,60 @@ public class Complex {
 	 * @return Sine of this complex number
 	 */
 	public Complex sin() {
-        return set(Math.sin(r) * Math.cosh(i), Math.cos(r) * Math.sinh(i));
-    }
-
+		return set(Math.sin(r) * Math.cosh(i), Math.cos(r) * Math.sinh(i));
+	}
+	
 	/**
 	 * @return Cosine of this complex number
 	 */
-    public Complex cos() {
-        return set(Math.cos(r) * Math.cosh(i), -Math.sin(r) * Math.sinh(i));
-    }
-
+	public Complex cos() {
+		return set(Math.cos(r) * Math.cosh(i), -Math.sin(r) * Math.sinh(i));
+	}
+	
 	/**
 	 * @return Tangent of this complex number
 	 */
-    public Complex tan() {
-    	Complex a = copy();
-        return sin().divide(a.cos());
-    }
-    
-    /**
-     * @return A copy of this complex number
-     */
-    public Complex copy(){
-    	return new Complex(this);
-    }
-    
-    /**
-     * Sets the values of this complex number to the supplied values
-     * @param real Real part of the complex number
-     * @param imaginary Imaginary part of the complex number
-     * @return Complex number with new values
-     */
-    public Complex set(double real, double imaginary){
-    	r = real;
-    	i = imaginary;
-    	return this;
-    }
-    
-    /**
-     * Sets this complex number to be equal to the given complex number
-     * @param c Complex number to copy
-     * @return Complex number with new values
-     */
-    public Complex set(Complex c){
-    	r = c.r;
-    	i = c.i;
-    	return this;
-    }
-    
-	public String toString(){
+	public Complex tan() {
+		Complex a = copy();
+		return sin().divide(a.cos());
+	}
+	
+	/**
+	 * @return A copy of this complex number
+	 */
+	public Complex copy() {
+		return new Complex(this);
+	}
+	
+	/**
+	 * Sets the values of this complex number to the supplied values
+	 * @param real Real part of the complex number
+	 * @param imaginary Imaginary part of the complex number
+	 * @return Complex number with new values
+	 */
+	public Complex set(double real, double imaginary) {
+		r = real;
+		i = imaginary;
+		return this;
+	}
+	
+	/**
+	 * Sets this complex number to be equal to the given complex number
+	 * @param c Complex number to copy
+	 * @return Complex number with new values
+	 */
+	public Complex set(Complex c) {
+		r = c.r;
+		i = c.i;
+		return this;
+	}
+	
+	public String toString() {
 		return r + " + " + i + "i";
 	}
 	
-	public boolean equals(Object o){
+	public boolean equals(Object o) {
 		Complex c = (Complex) o;
-		return r==c.r && i==c.i;
+		return r == c.r && i == c.i;
 	}
 }

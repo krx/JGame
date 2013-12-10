@@ -115,7 +115,7 @@ public class Animation implements Renderable {
 	}
 	
 	public void rotateEach(double degrees) {
-		for(int i=0; i<frames.size(); i++) {
+		for(int i = 0; i < frames.size(); i++) {
 			BufferedImage frame = frames.get(i);
 			AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(degrees), frame.getWidth() / 2, frame.getHeight() / 2);
 			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
