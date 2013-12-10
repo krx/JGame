@@ -14,7 +14,7 @@ public class Vector2 {
 	 * Initializes this vector to 0
 	 */
 	public Vector2(){
-		this(0,0);
+		set(0,0);
 	}
 	
 	/**
@@ -32,6 +32,15 @@ public class Vector2 {
 	 */
 	public Vector2(Vector2 v) {
 		set(v);
+	}
+	
+	/**
+	 * Initializes this vector with length 1 and degree angle theta in standard position
+	 * @param theta Angle in degrees to start in
+	 */
+	public Vector2(double theta) {
+		set(1,0);
+		rotate(theta);
 	}
 	
 	/**

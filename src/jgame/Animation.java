@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 
 import jgame.util.FileIOHelper;
 
-//TODO: Add sprite sheet compatibility 
 public class Animation implements Renderable {
 	private ArrayList<BufferedImage> frames = new ArrayList<BufferedImage>();
 	private int currentFrame;
@@ -28,13 +27,17 @@ public class Animation implements Renderable {
 		addFrames(paths);
 	}
 	
+	public Animation(SpriteSheet frames, int x1, int x2, int y1, int y2, boolean horizontalFirst) {
+		addFrames(frames, x1, x2, y1, y2, horizontalFirst);
+	}
+	
 	public void addFrames(BufferedImage... animFrames) {
-		for (BufferedImage i : animFrames)
+		for(BufferedImage i : animFrames)
 			frames.add(i);
 	}
 	
 	public void addFrames(String... paths) {
-		for (String s : paths) {
+		for(String s : paths) {
 			try {
 				frames.add(ImageIO.read(FileIOHelper.loadResource(s)));
 			} catch (IOException e) {
@@ -43,7 +46,23 @@ public class Animation implements Renderable {
 		}
 	}
 	
-	public void setFrame(int frame){
+	public void addFrames(SpriteSheet frames, int x1, int x2, int y1, int y2, boolean horizontalFirst) {
+		if(horizontalFirst) {
+			for(int y = y1; y <= y2; y++) {
+				for(int x = x1; x <= x2; x++) {
+					addFrames(frames.getSubImage(x, y));
+				}
+			}
+		} else {
+			for(int x = x1; x <= x2; x++) {
+				for(int y = y1; y <= y2; y++) {
+					addFrames(frames.getSubImage(x, y));
+				}
+			}
+		}
+	}
+	
+	public void setFrame(int frame) {
 		currentFrame = frame;
 	}
 	
@@ -95,20 +114,29 @@ public class Animation implements Renderable {
 		return frames.size();
 	}
 	
+	public void rotateEach(double degrees) {
+		for(int i=0; i<frames.size(); i++) {
+			BufferedImage frame = frames.get(i);
+			AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(degrees), frame.getWidth() / 2, frame.getHeight() / 2);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			frames.set(i, op.filter(frame, null));
+		}
+	}
+	
 	public void draw(Graphics g, int x, int y) {
-		if (frames.isEmpty()) {
+		if(frames.isEmpty()) {
 			return;
 		}
 		BufferedImage frame = frames.get(currentFrame);
 		BufferedImage f = new BufferedImage(frame.getWidth(), frame.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics fg = f.getGraphics();
-		if (flippedH && flippedV) { // Horizontal and Vertical flip = 180 degree rotation
+		if(flippedH && flippedV) { // Horizontal and Vertical flip = 180 degree rotation
 			AffineTransform tx = AffineTransform.getRotateInstance(Math.PI, frame.getWidth() / 2, frame.getHeight() / 2);
 			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 			f = op.filter(frame, null);
-		} else if (flippedH) { // Horizontal flip
+		} else if(flippedH) { // Horizontal flip
 			fg.drawImage(frame, 0, 0, f.getWidth(), f.getHeight(), f.getWidth(), 0, 0, f.getHeight(), null);
-		} else if (flippedV) { // Vertical flip
+		} else if(flippedV) { // Vertical flip
 			fg.drawImage(frame, 0, 0, f.getWidth(), f.getHeight(), 0, f.getHeight(), f.getWidth(), 0, null);
 		} else { // No changes, draw the original
 			fg.drawImage(frame, 0, 0, null);
