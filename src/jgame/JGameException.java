@@ -1,7 +1,7 @@
 package jgame;
 
 @SuppressWarnings("serial")
-public class JGameException extends Exception {
+public class JGameException extends RuntimeException {
 	public JGameException(String message) {
 		super(message);
 	}

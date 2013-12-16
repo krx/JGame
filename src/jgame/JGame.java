@@ -2,6 +2,7 @@ package jgame;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +18,7 @@ public abstract class JGame extends JPanel {
 	private double dTime = 0;
 	protected double fps = 0;
 	private int frames = 0;
+	private DecimalFormat df = new DecimalFormat("0.##");
 	protected static JFrame frame;
 	private static EventHandler input;
 	
@@ -33,6 +35,7 @@ public abstract class JGame extends JPanel {
 		addMouseMotionListener(input);
 		addKeyListener(input);
 		TinySound.init();
+		setResolution(800, 800);
 	}
 	
 	public void calcFPS() {
@@ -50,6 +53,10 @@ public abstract class JGame extends JPanel {
 		}
 	}
 	
+	public String getFPS() {
+		return df.format(fps);
+	}
+	
 	public void gameLoop(double delta) {
 		running = true;
 		double nextTime = (double) System.nanoTime() / 1000000000.0;
@@ -59,13 +66,15 @@ public abstract class JGame extends JPanel {
 		while(running) {
 			double now = (double) System.nanoTime() / 1000000000.0;
 			if(!paused) {
-				if((now - nextTime) > maxTimeDiff)
+				if((now - nextTime) > maxTimeDiff) {
 					nextTime = now;
+				}
 				if(now >= nextTime) {
 					nextTime += delta;
 					update((float) (nextTime - now));
 					if((now < nextTime) || (skippedFrames > maxSkippedFrames)) {
 						repaint();
+						calcFPS();
 						skippedFrames = 1;
 					} else {
 						skippedFrames++;
@@ -81,7 +90,7 @@ public abstract class JGame extends JPanel {
 					}
 				}
 			}
-			calcFPS();
+			// calcFPS();
 		}
 	}
 	

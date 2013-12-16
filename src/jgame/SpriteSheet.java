@@ -2,6 +2,7 @@ package jgame;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -35,15 +36,25 @@ public class SpriteSheet {
 	
 	public BufferedImage getSubImage(int x, int y) {
 		if(x < 0 || x > cols || y < 0 || y > rows) {
-			throw new RuntimeException(new JGameException("Sub-Image index out of range!"));
+			throw new JGameException("Sub-Image index out of range!");
 		}
 		return subImages[y][x];
 	}
 	
 	public BufferedImage[] getRow(int row) {
 		if(row < 0 || row > rows) {
-			throw new RuntimeException(new JGameException("Row index out of range!"));
+			throw new JGameException("Row index out of range!");
 		}
 		return subImages[row];
+	}
+	
+	public ArrayList<BufferedImage> getAllSubImages() {
+		ArrayList<BufferedImage> imgs = new ArrayList<BufferedImage>();
+		for(BufferedImage[] b : subImages) {
+			for(BufferedImage bb : b) {
+				imgs.add(bb);
+			}
+		}
+		return imgs;
 	}
 }

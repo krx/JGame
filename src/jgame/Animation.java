@@ -141,7 +141,7 @@ public class Animation implements Renderable {
 		} else { // No changes, draw the original
 			fg.drawImage(frame, 0, 0, null);
 		}
-		g.drawImage(f, x - f.getWidth() / 2, y - f.getHeight() / 2, null);
+		g.drawImage(f, x, y, null);
 		if(++tick >= rate) {
 			tick = 0;
 			currentFrame++;

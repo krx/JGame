@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import jgame.math.Vector2;
 
 public class Mouse {
-	protected Vector2 position;
+	protected static Vector2 position;
 	protected static boolean left, middle, right;
 	
 	// Action Lists
@@ -20,6 +20,10 @@ public class Mouse {
 		left = false;
 		middle = false;
 		right = false;
+	}
+	
+	public static Vector2 getPosition() {
+		return position;
 	}
 	
 	public static boolean isLeftDown() {
