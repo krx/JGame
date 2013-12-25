@@ -1,13 +1,12 @@
 package jgame;
 
 import java.awt.Graphics;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import jgame.util.FileIOHelper;
 
@@ -32,17 +31,14 @@ public class Animation implements Renderable {
 	}
 	
 	public void addFrames(BufferedImage... animFrames) {
-		for(BufferedImage i : animFrames)
+		for(BufferedImage i : animFrames) {
 			frames.add(i);
+		}
 	}
 	
 	public void addFrames(String... paths) {
 		for(String s : paths) {
-			try {
-				frames.add(ImageIO.read(FileIOHelper.loadResource(s)));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			frames.add(FileIOHelper.loadImage(s));
 		}
 	}
 	
@@ -83,11 +79,7 @@ public class Animation implements Renderable {
 	}
 	
 	public void insertFrame(int index, String path) {
-		try {
-			frames.add(index, ImageIO.read(FileIOHelper.loadResource(path)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		frames.add(index, FileIOHelper.loadImage(path));
 	}
 	
 	public void removeFrame(int index) {
@@ -127,8 +119,9 @@ public class Animation implements Renderable {
 		if(frames.isEmpty()) {
 			return;
 		}
+		GraphicsConfiguration gfx_config = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 		BufferedImage frame = frames.get(currentFrame);
-		BufferedImage f = new BufferedImage(frame.getWidth(), frame.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage f = gfx_config.createCompatibleImage(frame.getWidth(), frame.getHeight(), frame.getTransparency());
 		Graphics fg = f.getGraphics();
 		if(flippedH && flippedV) { // Horizontal and Vertical flip = 180 degree rotation
 			AffineTransform tx = AffineTransform.getRotateInstance(Math.PI, frame.getWidth() / 2, frame.getHeight() / 2);

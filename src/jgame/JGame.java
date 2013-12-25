@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.text.DecimalFormat;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import jgame.input.EventHandler;
@@ -13,13 +12,12 @@ import kuusisto.tinysound.TinySound;
 @SuppressWarnings("serial")
 public abstract class JGame extends JPanel {
 	private boolean running = false;
-	private boolean paused = false;
 	private double startTime = 0;
 	private double dTime = 0;
 	protected double fps = 0;
 	private int frames = 0;
 	private DecimalFormat df = new DecimalFormat("0.##");
-	protected static JFrame frame;
+	protected static String title;
 	private static EventHandler input;
 	
 	public JGame() {
@@ -27,15 +25,13 @@ public abstract class JGame extends JPanel {
 	}
 	
 	public JGame(String title) {
-		frame = new JFrame(title);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFocusable(true);
 		input = new EventHandler();
 		addMouseListener(input);
 		addMouseMotionListener(input);
 		addKeyListener(input);
 		TinySound.init();
-		setResolution(800, 800);
+		setResolution(800, 600);
 	}
 	
 	public void calcFPS() {
@@ -65,41 +61,33 @@ public abstract class JGame extends JPanel {
 		int maxSkippedFrames = 5;
 		while(running) {
 			double now = (double) System.nanoTime() / 1000000000.0;
-			if(!paused) {
-				if((now - nextTime) > maxTimeDiff) {
-					nextTime = now;
+			if((now - nextTime) > maxTimeDiff) {
+				nextTime = now;
+			}
+			if(now >= nextTime) {
+				repaint();
+				nextTime += delta;
+				update(nextTime - now);
+				if((now < nextTime) || (skippedFrames > maxSkippedFrames)) {
+					repaint();
+					calcFPS();
+					skippedFrames = 1;
+				} else {
+					skippedFrames++;
 				}
-				if(now >= nextTime) {
-					nextTime += delta;
-					update((float) (nextTime - now));
-					if((now < nextTime) || (skippedFrames > maxSkippedFrames)) {
-						repaint();
-						calcFPS();
-						skippedFrames = 1;
-					} else {
-						skippedFrames++;
+			} else {
+				int sleepTime = (int) (1000.0 * (nextTime - now));
+				if(sleepTime > 0) {
+					try {
+						Thread.sleep(sleepTime);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 				} else {
-					int sleepTime = (int) (1000.0 * (nextTime - now));
-					if(sleepTime > 0) {
-						try {
-							Thread.sleep(sleepTime);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+					Thread.yield();
 				}
 			}
-			// calcFPS();
 		}
-	}
-	
-	public void pause() {
-		paused = true;
-	}
-	
-	public void unPause() {
-		paused = false;
 	}
 	
 	public void stop() {
@@ -108,20 +96,16 @@ public abstract class JGame extends JPanel {
 		System.exit(1);
 	}
 	
-	public void init(final double deltaTime) {
-		frame.add(this);
-		frame.pack();
-		frame.setVisible(true);
+	public void init(final double fps) {
 		new Thread() {
 			public void run() {
-				gameLoop(deltaTime);
+				gameLoop(1.0 / fps);
 			}
 		}.start();
 	}
 	
 	public void setResolution(Dimension dim) {
 		setPreferredSize(dim);
-		frame.setSize(dim);
 	}
 	
 	public void setResolution(int x, int y) {
@@ -130,5 +114,5 @@ public abstract class JGame extends JPanel {
 	
 	public abstract void paintComponent(Graphics g);
 	
-	public abstract void update(float dt);
+	public abstract void update(double dt);
 }

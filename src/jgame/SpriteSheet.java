@@ -4,8 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import jgame.util.FileIOHelper;
 
 public class SpriteSheet {
@@ -31,7 +29,7 @@ public class SpriteSheet {
 	}
 	
 	public SpriteSheet(String path, int row, int col, int w, int h, int sx, int sy, int px, int py) throws IOException {
-		this(ImageIO.read(FileIOHelper.loadResource(path)), row, col, w, h, sx, sy, px, py);
+		this(FileIOHelper.loadImage(path), row, col, w, h, sx, sy, px, py);
 	}
 	
 	public BufferedImage getSubImage(int x, int y) {
