@@ -32,7 +32,7 @@ public class MathUtils {
 	public static int clampi(int value, int min, int max) {
 		return Math.max(min, Math.min(max, value));
 	}
-	
+
 	/**
 	 * Linear interpolation - Calculates a value between the 1st and 2nd values based on a percentage int the range [0,1]
 	 * @param val1 First value

@@ -5,6 +5,8 @@ package jgame.util;
  * Uses InputStream instead of File to allow usage in Applets and other OS's.
  * @author Kareem El-Faramawi
  */
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -24,6 +26,17 @@ public class FileIOHelper {
 	public static InputStream loadResource(String path) {
 		String p = (path.startsWith("/") ? "" : "/") + path;
 		return FileIOHelper.class.getResourceAsStream(p);
+	}
+	
+	public static Font loadFont(String path) {
+		try {
+			return Font.createFont(Font.TRUETYPE_FONT, loadResource(path));
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static BufferedImage loadImage(String path) {
